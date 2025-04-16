@@ -53,7 +53,7 @@ def find_privacy_policy_link(url):
         
         # Поиск ссылок, содержащих "privacy policy" или похожие термины
         privacy_links = []
-        privacy_terms = ['privacy', 'privacy policy', 'политика конфиденциальности', 'конфиденциальность']
+        privacy_terms = ['privacy', 'privacy policy', 'legal', 'legal policy']
         
         for link in soup.find_all('a'):
             href = link.get('href')
