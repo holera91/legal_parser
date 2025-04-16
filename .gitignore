@@ -8,4 +8,4 @@ wheels/
 credentials.json
 # Virtual environments
 .venv
-uv.locck
+uv.lock
