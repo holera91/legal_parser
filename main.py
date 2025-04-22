@@ -6,12 +6,16 @@ import re
 from urllib.parse import urljoin
 import json
 import logging
+from tqdm import tqdm
+import sys
 
 # Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filename='log.txt',
+    filemode='w'
 )
 logger = logging.getLogger(__name__)
 
@@ -25,6 +29,7 @@ def setup_google_sheets():
         creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_data, scope)
         client = gspread.authorize(creds)
         logger.info("Авторизация успешно завершена")
+        print("Авторизация успешно завершена")  # Виводимо в консоль
         return client
     except Exception as e:
         logger.error(f"Ошибка при авторизации: {str(e)}")
@@ -85,38 +90,27 @@ def find_privacy_policy_link(url):
         logger.error(f"Ошибка при обработке {url}: {str(e)}")
         return f"Ошибка: {str(e)}"
 
+def load_config():
+    with open('config.json', 'r', encoding='utf-8') as f:
+        return json.load(f)
+
 def main():
     try:
+        # Загружаем конфигурацию
+        config = load_config()
+        spreadsheet_id = config['spreadsheet_id']
+        sheet_name = config['sheet_name']
+        data_range = config['range']
+        
         # Подключаемся к Google Sheets
         client = setup_google_sheets()
         
-        # Получаем список всех таблиц
-        logger.info("Получаю список доступных таблиц...")
-        spreadsheets = client.openall()
+        # Открываем таблицу по ID
+        spreadsheet = client.open_by_key(spreadsheet_id)
+        sheet = spreadsheet.worksheet(sheet_name)
         
-        if not spreadsheets:
-            logger.error("Не найдено доступных таблиц. Проверьте права доступа.")
-            return
-            
-        logger.info(f"Найдено {len(spreadsheets)} таблиц:")
-        for i, sheet in enumerate(spreadsheets):
-            logger.info(f"{i+1}. {sheet.title}")
-            
-        # Выбираем первую таблицу или просим пользователя выбрать
-        if len(spreadsheets) == 1:
-            sheet = spreadsheets[0].sheet1
-            logger.info(f"Автоматически выбрана таблица: {sheet.spreadsheet.title}")
-        else:
-            choice = input("\nВыберите номер таблицы: ")
-            sheet = spreadsheets[int(choice)-1].sheet1
-            logger.info(f"Выбрана таблица: {sheet.spreadsheet.title}")
-        
-        # Получаем все URL из первого столбца
-        logger.info("Читаю данные из первого столбца...")
-        urls = sheet.col_values(1)
-        if not urls:
-            logger.error("Первый столбец пустой. Добавьте URL сайтов в столбец A.")
-            return
+        # Получаем данные из указанного диапазона
+        urls = sheet.get(data_range)
         
         # Проверяем, есть ли заголовок
         if len(urls) < 2:
@@ -125,22 +119,27 @@ def main():
             
         # Пропускаем первый ряд (заголовок)
         urls = urls[1:]
-        logger.info(f"Пропускаю заголовок: {urls[0]}")
-        
-        logger.info(f"Найдено {len(urls)} URL для обработки")
+        logger.info(f"Обрабатываем таблицу: {sheet_name}, найдено {len(urls)} URL для обработки")
+        print(f"Обрабатываем таблицу: {sheet_name}, найдено {len(urls)} URL для обработки")  # Виводимо в консоль
         
         # Создаем новый столбец для результатов
         results = []
-        for i, url in enumerate(urls, 2):  # Начинаем с индекса 2 (второй ряд)
-            if url:  # Проверяем, что URL не пустой
-                logger.info(f"Обрабатываю ячейку A{i}: {url}")
-                privacy_link = find_privacy_policy_link(url.strip())
+        
+        # Инициализируем прогресс-бар
+        for i, url in tqdm(enumerate(urls, 2), total=len(urls), desc="Обработка URL", unit="URL"):
+            if url:  # Перевіряємо, що URL не пустий
+                current_url = url[0].strip()  # Отримуємо URL
+                # Форматируем сообщение для консоли
+                sys.stdout.write(f"\r{i}/{len(urls)}   Обрабатывается: {current_url}")  # Виводимо прогрес
+                sys.stdout.flush()  # Очищаємо буфер виводу
+                privacy_link = find_privacy_policy_link(current_url)  # Використовуємо url[0]
                 results.append([privacy_link])
                 
-                # Обновляем результаты в реальном времени
+                # Оновлюємо результати в реальному часі
                 logger.info(f"Записываю результат в ячейку B{i}: {privacy_link}")
-                sheet.update(f'B{i}', [[privacy_link]])
+                sheet.update(values=[[privacy_link]], range_name=f'B{i}')
         
+        print()  # Додаємо новий рядок після завершення прогресу
         logger.info("Поиск успешно завершен!")
         
     except Exception as e:

@@ -1,0 +1,46 @@
+2025-04-23 01:04:05 - INFO - Начинаю авторизацию в Google Sheets...
+2025-04-23 01:04:05 - INFO - Авторизация успешно завершена
+2025-04-23 01:04:07 - INFO - Обрабатываем таблицу: Legal_nodes, найдено 12 URL для обработки
+2025-04-23 01:04:07 - INFO - Проверяю сайт: https://www.chainthat.com/
+2025-04-23 01:04:08 - INFO - Найдена ссылка на политику конфиденциальности: https://chainthat.com/privacy-policy/
+2025-04-23 01:04:08 - INFO - Записываю результат в ячейку B2: https://chainthat.com/privacy-policy/
+2025-04-23 01:04:09 - INFO - Проверяю сайт: https://centrusfinancial.com/
+2025-04-23 01:04:10 - INFO - Найдена ссылка на политику конфиденциальности: https://centrusfinancial.com/privacy-cookies/
+2025-04-23 01:04:10 - INFO - Найдена ссылка на политику конфиденциальности: https://centrusfinancial.com
+2025-04-23 01:04:10 - INFO - Записываю результат в ячейку B3: https://centrusfinancial.com/privacy-cookies/
+2025-04-23 01:04:11 - INFO - Проверяю сайт: https://centrusfinancial.com/
+2025-04-23 01:04:11 - INFO - Найдена ссылка на политику конфиденциальности: https://centrusfinancial.com/privacy-cookies/
+2025-04-23 01:04:11 - INFO - Найдена ссылка на политику конфиденциальности: https://centrusfinancial.com
+2025-04-23 01:04:11 - INFO - Записываю результат в ячейку B4: https://centrusfinancial.com/privacy-cookies/
+2025-04-23 01:04:12 - INFO - Проверяю сайт: https://kingfisherinsurance.com
+2025-04-23 01:04:14 - INFO - Найдена ссылка на политику конфиденциальности: https://www.kingfisherinsurance.com/privacy-policy
+2025-04-23 01:04:14 - INFO - Записываю результат в ячейку B5: https://www.kingfisherinsurance.com/privacy-policy
+2025-04-23 01:04:14 - INFO - Проверяю сайт: https://kingfisherinsurance.com
+2025-04-23 01:04:15 - INFO - Найдена ссылка на политику конфиденциальности: https://www.kingfisherinsurance.com/privacy-policy
+2025-04-23 01:04:15 - INFO - Записываю результат в ячейку B6: https://www.kingfisherinsurance.com/privacy-policy
+2025-04-23 01:04:16 - INFO - Проверяю сайт: https://www.geounderwriting.com/
+2025-04-23 01:04:16 - WARNING - Ссылка на политику конфиденциальности не найдена для https://www.geounderwriting.com/
+2025-04-23 01:04:16 - INFO - Записываю результат в ячейку B7: Не найдено
+2025-04-23 01:04:17 - INFO - Проверяю сайт: https://www.decta.com/
+2025-04-23 01:04:17 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:17 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/decta-secure-privacy-policy
+2025-04-23 01:04:17 - INFO - Записываю результат в ячейку B8: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:18 - INFO - Проверяю сайт: https://www.decta.com/
+2025-04-23 01:04:18 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:18 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/decta-secure-privacy-policy
+2025-04-23 01:04:18 - INFO - Записываю результат в ячейку B9: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:19 - INFO - Проверяю сайт: https://www.decta.com/
+2025-04-23 01:04:20 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:20 - INFO - Найдена ссылка на политику конфиденциальности: https://www.decta.com/documents/decta-secure-privacy-policy
+2025-04-23 01:04:20 - INFO - Записываю результат в ячейку B10: https://www.decta.com/documents/privacy-policy
+2025-04-23 01:04:21 - INFO - Проверяю сайт: https://getapron.com/
+2025-04-23 01:04:22 - INFO - Найдена ссылка на политику конфиденциальности: https://getapron.com/terms-and-policies/privacy-policy
+2025-04-23 01:04:22 - INFO - Записываю результат в ячейку B11: https://getapron.com/terms-and-policies/privacy-policy
+2025-04-23 01:04:23 - INFO - Проверяю сайт: https://www.stirlingshire.com/
+2025-04-23 01:04:23 - INFO - Найдена ссылка в URL: https://apexfintechsolutions.com/legal/disclosures/
+2025-04-23 01:04:23 - INFO - Записываю результат в ячейку B12: https://apexfintechsolutions.com/legal/disclosures/
+2025-04-23 01:04:24 - INFO - Проверяю сайт: https://leatherback.co/
+2025-04-23 01:04:25 - INFO - Найдена ссылка на политику конфиденциальности: https://leatherback.co/company/privacy-policy
+2025-04-23 01:04:25 - INFO - Найдена ссылка на политику конфиденциальности: https://leatherback.co/company/privacy-policy
+2025-04-23 01:04:25 - INFO - Записываю результат в ячейку B13: https://leatherback.co/company/privacy-policy
+2025-04-23 01:04:25 - INFO - Поиск успешно завершен!
