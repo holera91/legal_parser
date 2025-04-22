@@ -9,3 +9,4 @@ credentials.json
 # Virtual environments
 .venv
 uv.lock
+log.txt

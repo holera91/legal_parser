@@ -8,6 +8,9 @@ import json
 import logging
 from tqdm import tqdm
 import sys
+from url_processing import process_urls
+from site_validation import validate_sites
+from gemini_api import process_gemini_data
 
 # Настройка логирования
 logging.basicConfig(
@@ -95,55 +98,38 @@ def load_config():
         return json.load(f)
 
 def main():
-    try:
-        # Загружаем конфигурацию
-        config = load_config()
-        spreadsheet_id = config['spreadsheet_id']
-        sheet_name = config['sheet_name']
-        data_range = config['range']
-        
-        # Подключаемся к Google Sheets
-        client = setup_google_sheets()
-        
-        # Открываем таблицу по ID
-        spreadsheet = client.open_by_key(spreadsheet_id)
-        sheet = spreadsheet.worksheet(sheet_name)
-        
-        # Получаем данные из указанного диапазона
-        urls = sheet.get(data_range)
-        
-        # Проверяем, есть ли заголовок
-        if len(urls) < 2:
-            logger.error("В таблице только заголовок. Добавьте URL сайтов в столбец A.")
-            return
-            
-        # Пропускаем первый ряд (заголовок)
-        urls = urls[1:]
-        logger.info(f"Обрабатываем таблицу: {sheet_name}, найдено {len(urls)} URL для обработки")
-        print(f"Обрабатываем таблицу: {sheet_name}, найдено {len(urls)} URL для обработки")  # Виводимо в консоль
-        
-        # Создаем новый столбец для результатов
-        results = []
-        
-        # Инициализируем прогресс-бар
-        for i, url in tqdm(enumerate(urls, 2), total=len(urls), desc="Обработка URL", unit="URL"):
-            if url:  # Перевіряємо, що URL не пустий
-                current_url = url[0].strip()  # Отримуємо URL
-                # Форматируем сообщение для консоли
-                sys.stdout.write(f"\r{i}/{len(urls)}   Обрабатывается: {current_url}")  # Виводимо прогрес
-                sys.stdout.flush()  # Очищаємо буфер виводу
-                privacy_link = find_privacy_policy_link(current_url)  # Використовуємо url[0]
-                results.append([privacy_link])
-                
-                # Оновлюємо результати в реальному часі
-                logger.info(f"Записываю результат в ячейку B{i}: {privacy_link}")
-                sheet.update(values=[[privacy_link]], range_name=f'B{i}')
-        
-        print()  # Додаємо новий рядок після завершення прогресу
-        logger.info("Поиск успешно завершен!")
-        
-    except Exception as e:
-        logger.error(f"Произошла ошибка: {str(e)}")
+    logging.basicConfig(level=logging.INFO)
+    
+    # Завантажуємо конфігурацію
+    config = load_config()
+    spreadsheet_id = config['spreadsheet_id']
+    sheet_name = config['sheet_name']
+    data_range = config['range']
+    
+    client = setup_google_sheets()
+    
+    spreadsheet = client.open_by_key(spreadsheet_id)
+    sheet = spreadsheet.worksheet(sheet_name)
+
+    while True:
+        print("Виберіть функцію:")
+        print("1. Пошук URL Privacy Notes")
+        print("2. Перевірка валідності сайтів")
+        print("3. Передача даних до Gemini API")
+        print("0. Вихід")
+
+        choice = input("Ваш вибір: ")
+
+        if choice == '1':
+            process_urls(sheet, data_range)
+        elif choice == '2':
+            validate_sites(sheet, data_range)
+        elif choice == '3':
+            process_gemini_data(sheet, data_range)
+        elif choice == '0':
+            break
+        else:
+            print("Невірний вибір, спробуйте ще раз.")
 
 if __name__ == "__main__":
     main() 
