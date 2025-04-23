@@ -1,5 +1,7 @@
 {
     "spreadsheet_id": "1984k6gru7k9WI8FYIUg9hA6HG80b4J5hacYFiIGbP5Y",
     "sheet_name": "Legal_nodes",
-    "range": "A1:A"
+    "range": "A1:A",
+    "url_column": "website url",
+    "legal_url_column": "legal url"
 }

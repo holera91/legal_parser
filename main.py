@@ -121,11 +121,11 @@ def main():
         choice = input("Ваш вибір: ")
 
         if choice == '1':
-            process_urls(sheet, data_range)
+            process_urls(sheet, config)
         elif choice == '2':
-            validate_sites(sheet, data_range)
+            validate_sites(sheet, config)
         elif choice == '3':
-            process_gemini_data(sheet, data_range)
+            process_gemini_data(sheet, config)
         elif choice == '0':
             break
         else:
